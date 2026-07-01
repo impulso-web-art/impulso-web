@@ -1,0 +1,782 @@
+/* ==========================================================================
+   RESET GENERAL Y VARIABLES DE DISEÑO (Estilo Stripe/Linear)
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-main: #050816;
+    --bg-secondary: #0F172A;
+    --primary-electric: #2563EB;
+    --primary-glow: rgba(37, 99, 235, 0.4);
+    --accent-purple: #7C3AED;
+    --accent-cyan: #06B6D4;
+    --text-pure: #FFFFFF;
+    --text-muted: #94A3B8;
+    --text-dark: #64748B;
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --bg-glass: rgba(15, 23, 42, 0.65);
+    --font-stack: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: var(--font-stack);
+    background-color: var(--bg-main);
+    color: var(--text-pure);
+    overflow-x: hidden;
+}
+
+body {
+    position: relative;
+    line-height: 1.6;
+}
+
+/* Tipografías Utilitarias */
+h1, h2, h3, h4, h5 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ==========================================================================
+   LUCES DE FONDO (AMBIENT GLOWS REQUERIDOS SIN JS)
+   ========================================================================== */
+.ambient-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(140px);
+    opacity: 0.15;
+    mix-blend-mode: screen;
+}
+.glow-1 {
+    top: -100px;
+    right: -100px;
+    background: var(--primary-electric);
+    animation: pulseGlow 10s infinite alternate;
+}
+.glow-2 {
+    top: 800px;
+    left: -200px;
+    background: var(--accent-purple);
+}
+.glow-3 {
+    bottom: 400px;
+    right: -100px;
+    background: var(--accent-cyan);
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1) translate(0, 0); opacity: 0.15; }
+    100% { transform: scale(1.15) translate(30px, 20px); opacity: 0.25; }
+}
+
+/* ==========================================================================
+   ESTILOS COMPONENTES (BOTONES, CARDS, CONTENEDORES)
+   ========================================================================== */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+.max-w-md { max-width: 800px; margin-left: auto; margin-right: auto; }
+.max-w-sm { max-width: 700px; margin-left: auto; margin-right: auto; }
+.text-center { text-align: center; }
+.text-gradient {
+    background: linear-gradient(135deg, var(--text-pure) 30%, var(--primary-electric) 70%, var(--accent-cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.margin-top-sm { margin-top: 16px; }
+.margin-top-lg { margin-top: 48px; }
+
+/* Botones con efectos visuales premium */
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 99px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: 1px solid transparent;
+    text-align: center;
+}
+.btn-primary {
+    background: var(--primary-electric);
+    color: var(--text-pure);
+    box-shadow: 0 4px 20px var(--primary-glow);
+    position: relative;
+    overflow: hidden;
+}
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    transition: 0.8s;
+    opacity: 0;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.6);
+}
+.btn-primary:hover::after {
+    opacity: 1;
+    left: 120%;
+    top: 120%;
+}
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-pure);
+    border-color: var(--border-glass);
+    backdrop-filter: blur(8px);
+}
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+.btn-full { width: 100%; display: block; }
+.text-sm { font-size: 13px; padding: 10px 20px; }
+
+/* Estructura Glassmorphism */
+.glass-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    padding: 32px;
+    transition: var(--transition-smooth);
+}
+.glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.badge-premium {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(37, 99, 235, 0.1);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    color: var(--accent-cyan);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 99px;
+    margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   HEADER / STICKY NAVIGATION
+   ========================================================================== */
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5, 8, 22, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-glass);
+}
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+}
+.logo {
+    font-weight: 800;
+    font-size: 19px;
+    letter-spacing: -0.03em;
+    color: var(--text-pure);
+}
+.logo-accent {
+    color: var(--primary-electric);
+}
+.nav-menu {
+    display: flex;
+    gap: 32px;
+}
+.nav-link {
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+    font-weight: 500;
+}
+.nav-link:hover {
+    color: var(--text-pure);
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero-section {
+    padding: 120px 0 80px 0;
+    position: relative;
+}
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+    align-items: center;
+}
+.hero-title {
+    font-size: 54px;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: var(--text-pure);
+}
+.hero-subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 36px;
+    font-weight: 400;
+}
+
+/* Mockup Tecnológico CSS Puro (Sin JS / Sin imágenes) */
+.mockup-container {
+    background: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    overflow: hidden;
+    position: relative;
+    animation: floatAnimation 6s ease-in-out infinite;
+}
+.mockup-header {
+    background: rgba(255,255,255,0.03);
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.mockup-header .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2);
+}
+.mockup-url {
+    margin-left: 16px;
+    background: rgba(0,0,0,0.3);
+    padding: 2px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    color: var(--text-dark);
+    width: 60%;
+}
+.mockup-body {
+    height: 300px;
+    padding: 24px;
+    position: relative;
+    background: linear-gradient(180deg, #0f172a 0%, #050816 100%);
+}
+.visual-element {
+    position: absolute;
+    border-radius: 6px;
+    background: linear-gradient(90deg, rgba(37,99,235,0.2), rgba(124,58,237,0.2));
+    border: 1px dashed rgba(255,255,255,0.1);
+}
+.visual-box-1 { top: 30px; left: 24px; width: 70%; height: 24px; }
+.visual-box-2 { top: 70px; left: 24px; width: 45%; height: 14px; }
+.visual-box-3 { bottom: 30px; right: 24px; width: 100px; height: 35px; border-radius: 20px; background: var(--primary-electric); }
+.visual-circle {
+    position: absolute;
+    top: 110px; right: 40px; width: 80px; height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%);
+    opacity: 0.5;
+    animation: pulseGlow 4s infinite alternate;
+}
+
+@keyframes floatAnimation {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+/* ==========================================================================
+   TICKER BANNER (CINTA DE TEXTO ININTERRUMPIDA)
+   ========================================================================== */
+.ticker-banner {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-glass);
+    border-bottom: 1px solid var(--border-glass);
+    padding: 16px 0;
+    overflow: hidden;
+}
+.ticker-wrap {
+    display: flex;
+    width: 200%;
+    animation: tickerAnimation 25s linear infinite;
+}
+.ticker-item {
+    white-space: nowrap;
+    padding-right: 40px;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+@keyframes tickerAnimation {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ==========================================================================
+   SECCIONES GENERALES Y CONTENIDO ESPECÍFICO
+   ========================================================================== */
+.section {
+    padding: 100px 0;
+}
+.section-title {
+    font-size: 38px;
+    margin-bottom: 16px;
+}
+.section-desc {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 56px;
+}
+
+/* Problema */
+.problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 56px;
+}
+.problem-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: left;
+}
+.problem-icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 16px;
+}
+.problem-card h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+.problem-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+.quote-box {
+    border-left: 3px solid var(--primary-electric);
+    padding: 8px 24px;
+    text-align: left;
+    display: inline-block;
+    background: rgba(37,99,235,0.05);
+}
+.quote-text {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--text-pure);
+}
+
+/* Beneficios Grid */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+.benefit-card h3 {
+    font-size: 18px;
+}
+.benefit-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.benefit-icon {
+    font-size: 24px;
+}
+.benefit-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   TABLA COMPARATIVA PREMIUM
+   ========================================================================== */
+.comparison-table-wrapper {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    overflow: hidden;
+}
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+.comparison-table th, .comparison-table td {
+    padding: 20px 24px;
+    font-size: 15px;
+    border-bottom: 1px solid var(--border-glass);
+}
+.comparison-table th {
+    background: rgba(255,255,255,0.02);
+    font-weight: 600;
+}
+.feature-name {
+    font-weight: 600;
+    color: var(--text-pure);
+}
+.table-bad { color: #EF4444; }
+.table-good { color: var(--accent-cyan); }
+.text-highlight { color: var(--text-pure); font-weight: 500; }
+.impact-phrase {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent-cyan);
+}
+
+/* ==========================================================================
+   SECCIÓN PRECIO (TARJETA MAESTRA DE VENTA)
+   ========================================================================== */
+.price-card-box {
+    position: relative;
+    max-w-sm;
+    margin: 0 auto;
+}
+.price-card-glow {
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, var(--primary-electric), var(--accent-purple));
+    border-radius: 24px;
+    z-index: 1;
+    filter: blur(10px);
+    opacity: 0.6;
+}
+.price-card {
+    position: relative;
+    z-index: 2;
+    background: #0b1120;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 48px;
+}
+.price-tag-popular {
+    position: absolute;
+    top: 24px; right: 24px;
+    background: linear-gradient(90deg, var(--primary-electric), var(--accent-purple));
+    padding: 4px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 99px;
+    letter-spacing: 0.05em;
+}
+.price-plan-title {
+    font-size: 20px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+.price-amount {
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--text-pure);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+.price-currency {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+.price-statement {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+}
+.price-features {
+    list-style: none;
+    margin-bottom: 32px;
+}
+.price-features li {
+    font-size: 15px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.check-icon {
+    color: var(--accent-cyan);
+    font-weight: bold;
+}
+.maintenance-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+}
+.maintenance-box h4 {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+.maintenance-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-pure);
+    margin-bottom: 6px;
+}
+.maintenance-desc {
+    font-size: 12px;
+    color: var(--text-dark);
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   PROCESO LINEAL
+   ========================================================================== */
+.process-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.process-step {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: center;
+}
+.step-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: rgba(37, 99, 235, 0.4);
+}
+.process-step h4 {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+.process-step p {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+.process-arrow {
+    font-size: 24px;
+    color: var(--text-dark);
+    margin: 12px 0;
+}
+
+/* ==========================================================================
+   TESTIMONIOS
+   ========================================================================== */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+.testimonial-comment {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    position: relative;
+}
+.testimonial-user {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--text-dark);
+}
+/* Avatares generados abstractamente por gradientes puros CSS sin archivos externos */
+.av-1 { background: linear-gradient(135deg, #FF5733, #33FFCE); }
+.av-2 { background: linear-gradient(135deg, #7C3AED, #06B6D4); }
+
+.user-name { font-size: 14px; color: var(--text-pure); }
+.user-company { font-size: 12px; color: var(--text-dark); }
+
+/* ==========================================================================
+   ACORDEONES FAQ INTEGRAL (SÓLO CSS USANDO DETAILS)
+   ========================================================================== */
+.faq-accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+}
+.faq-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+.faq-item[open] {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+.faq-question {
+    padding: 20px 24px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    list-style: none; /* Remueve flecha nativa */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.faq-question::-webkit-details-marker {
+    display: none; /* Remueve flecha nativa en Webkit */
+}
+.faq-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+}
+.faq-icon::before, .faq-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--text-pure);
+    transition: transform 0.3s ease;
+}
+/* Línea horizontal */
+.faq-icon::before {
+    top: 5px; left: 0; width: 12px; height: 2px;
+}
+/* Línea vertical */
+.faq-icon::after {
+    top: 0; left: 5px; width: 2px; height: 12px;
+}
+/* Rotación de icono con CSS puro al abrir */
+.faq-item[open] .faq-icon::after {
+    transform: rotate(90deg);
+    opacity: 0;
+}
+.faq-item[open] .faq-icon::before {
+    transform: rotate(180deg);
+}
+.faq-answer {
+    padding: 0 24px 20px 24px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   CTA FINAL CONTEXTUAL
+   ========================================================================== */
+.cta-accent-box {
+    background: linear-gradient(180deg, rgba(15,23,42,0.8) 0%, rgba(5,8,22,1) 100%);
+    padding: 60px;
+    border: 1px solid rgba(37, 99, 235, 0.2);
+}
+.cta-accent-box h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+.cta-accent-box p {
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.main-footer {
+    background: #02040a;
+    border-top: 1px solid var(--border-glass);
+    padding: 60px 0 30px 0;
+    font-size: 14px;
+}
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+.footer-tagline {
+    color: var(--text-dark);
+    margin-top: 12px;
+    max-width: 320px;
+}
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.footer-wa-link {
+    color: var(--text-pure);
+    font-weight: 500;
+}
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.02);
+    padding-top: 30px;
+    color: var(--text-dark);
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (MEDIA QUERIES INTEGRALES)
+   ========================================================================== */
+@media (max-width: 968px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .hero-actions {
+        display: flex;
+        justify-content: center;
+    }
+    .hero-title {
+        font-size: 40px;
+    }
+    .problem-grid, .benefits-grid, .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+    .nav-menu {
+        display: none; /* Simplificación para responsive sin JS */
+    }
+    .comparison-table th:nth-child(2), .comparison-table td:nth-child(2) {
+        display: none; /* Esconde columna negativa en móvil para optimizar espacio */
+    }
+}
+
+@media (max-width: 480px) {
+    .section { padding: 60px 0; }
+    .hero-title { font-size: 32px; }
+    .price-card { padding: 24px; }
+    .price-amount { font-size: 40px; }
+    .cta-accent-box { padding: 32px 16px; }
+    .footer-container { flex-direction: column; gap: 32px; }
+}
